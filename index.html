@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Generator</title>
+	<link rel="stylesheet" href="style/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>AI Prompt Generator</h1>
+            <div class="user-controls">
+                <span id="user-email"></span>
+                <button id="login-button" class="action-button">Login with Google</button>
+                <button id="logout-button" class="action-button" style="display: none;">Logout</button>
+            </div>
+        </header>
+        
+        <div id="prompt-library" class="prompt-library" style="display: none;">
+            <h3>Saved Prompts</h3>
+            <div id="saved-prompts"></div>
+        </div>
+        
+        <div class="media-type-container">
+            <button class="media-button active" data-media="images">Images</button>
+            <button class="media-button" data-media="icons">Icons</button>
+            <button id="add-media-button" class="media-button add-button">+ Add Media Type</button>
+        </div>
+        
+        <div id="add-media-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Add New Media Type</h3>
+                <input type="text" id="new-media-type" class="dark-input" placeholder="e.g., Wallpaper">
+                <div class="modal-buttons">
+                    <button id="confirm-add-media" class="action-button">Add</button>
+                    <button id="cancel-add-media" class="action-button cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="model-tabs" class="tab-container"></div>
+        
+        <div id="images-content" class="media-content active">
+            <div id="sogni-content" class="tab-content active">
+                <div class="prompt-container">
+                    <div class="prompt-builder">
+                        <p id="images-prompt-text">
+                            Create a 
+                            <span class="select-wrapper">
+                                <input type="text" id="images-subject" class="dark-input" placeholder="Enter subject (e.g., landscape)">
+                            </span> 
+                            Images in 
+                            <span class="select-wrapper">
+                                <select id="images-style" class="dark-select">
+                                    <option value="Generic">Generic</option>
+                                    <option value="Minimalist">Minimalist</option>
+                                    <option value="Realistic">Realistic</option>
+                                    <option value="Abstract">Abstract</option>
+                                    <option value="Decorative">Decorative</option>
+                                </select>
+                                <span class="lock-icon unlocked" data-for="images-style" title="Click to lock/unlock">&#x1F513;</span>
+                            </span> 
+                            style using 
+                            <span class="select-wrapper">
+                                <select id="images-technique" class="dark-select">
+                                    <option value="3D">3D</option>
+                                    <option value="Filled">Filled</option>
+                                    <option value="Line">Line</option>
+                                    <option value="Hand-drawn">Hand-drawn</option>
+                                </select>
+                                <span class="lock-icon unlocked" data-for="images-technique" title="Click to lock/unlock">&#x1F513;</span>
+                            </span> 
+                            technique, with 
+                            <span class="select-wrapper">
+                                <select id="images-colors" class="dark-select">
+                                    <option value="Multi">Multi</option>
+                                    <option value="Duo">Duo</option>
+                                    <option value="Mono">Mono</option>
+                                    <option value="Gradient">Gradient</option>
+                                </select>
+                                <span class="lock-icon unlocked" data-for="images-colors" title="Click to lock/unlock">&#x1F513;</span>
+                            </span> 
+                            colors, 
+                            <span class="select-wrapper">
+                                <select id="images-aesthetic" class="dark-select">
+                                    <option value="Professional">Professional</option>
+                                    <option value="Decorative">Decorative</option>
+                                    <option value="Games">Games</option>
+                                    <option value="Classic">Classic</option>
+                                    <option value="Kids">Kids</option>
+                                </select>
+                                <span class="lock-icon unlocked" data-for="images-aesthetic" title="Click to lock/unlock">&#x1F513;</span>
+                            </span> 
+                            aesthetic, and a 
+                            <span class="select-wrapper">
+                                <select id="images-trendiness" class="dark-select">
+                                    <option value="Retro">Retro</option>
+                                    <option value="2000s">2000s</option>
+                                    <option value="2010s">2010s</option>
+                                    <option value="2020s">2020s</option>
+                                    <option value="New">New</option>
+                                </select>
+                                <span class="lock-icon unlocked" data-for="images-trendiness" title="Click to lock/unlock">&#x1F513;</span>
+                            </span> 
+                            trendiness style.
+                        </p>
+                    </div>
+                    <div class="output-panel">
+                        <div id="images-prompt-output" class="output-display"></div>
+                        <div class="button-container">
+                            <button id="images-random-button" class="action-button random">Random</button>
+                            <button id="images-save-button" class="action-button save">Save Prompt</button>
+                            <button id="images-copy-button" class="action-button copy">Copy to Clipboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Other model tabs for Images can be added here -->
+        </div>
+        
+        <div id="icons-content" class="media-content">
+            <div class="prompt-container">
+                <div class="prompt-builder">
+                    <p id="icons-prompt-text">
+                        Create a 
+                        <span class="select-wrapper">
+                            <input type="text" id="icons-subject" class="dark-input" placeholder="Enter subject (e.g., house)">
+                        </span> 
+                        Icons in 
+                        <span class="select-wrapper">
+                            <select id="icons-style" class="dark-select">
+                                <option value="Generic">Generic</option>
+                                <option value="Minimalist">Minimalist</option>
+                                <option value="Realistic">Realistic</option>
+                                <option value="Abstract">Abstract</option>
+                                <option value="Decorative">Decorative</option>
+                            </select>
+                            <span class="lock-icon unlocked" data-for="icons-style" title="Click to lock/unlock">&#x1F513;</span>
+                        </span> 
+                        style using 
+                        <span class="select-wrapper">
+                            <select id="icons-technique" class="dark-select">
+                                <option value="3D">3D</option>
+                                <option value="Filled">Filled</option>
+                                <option value="Line">Line</option>
+                                <option value="Hand-drawn">Hand-drawn</option>
+                            </select>
+                            <span class="lock-icon unlocked" data-for="icons-technique" title="Click to lock/unlock">&#x1F513;</span>
+                        </span> 
+                        technique, with 
+                        <span class="select-wrapper">
+                            <select id="icons-colors" class="dark-select">
+                                <option value="Multi">Multi</option>
+                                <option value="Duo">Duo</option>
+                                <option value="Mono">Mono</option>
+                                <option value="Gradient">Gradient</option>
+                            </select>
+                            <span class="lock-icon unlocked" data-for="icons-colors" title="Click to lock/unlock">&#x1F513;</span>
+                        </span> 
+                        colors, 
+                        <span class="select-wrapper">
+                            <select id="icons-aesthetic" class="dark-select">
+                                <option value="Professional">Professional</option>
+                                <option value="Decorative">Decorative</option>
+                                <option value="Games">Games</option>
+                                <option value="Classic">Classic</option>
+                                <option value="Kids">Kids</option>
+                            </select>
+                            <span class="lock-icon unlocked" data-for="icons-aesthetic" title="Click to lock/unlock">&#x1F513;</span>
+                        </span> 
+                        aesthetic, and a 
+                        <span class="select-wrapper">
+                            <select id="icons-trendiness" class="dark-select">
+                                <option value="Retro">Retro</option>
+                                <option value="2000s">2000s</option>
+                                <option value="2010s">2010s</option>
+                                <option value="2020s">2020s</option>
+                                <option value="New">New</option>
+                            </select>
+                            <span class="lock-icon unlocked" data-for="icons-trendiness" title="Click to lock/unlock">&#x1F513;</span>
+                        </span> 
+                        trendiness style.
+                    </p>
+                </div>
+                <div class="output-panel">
+                    <div id="icons-prompt-output" class="output-display"></div>
+                    <div class="button-container">
+                        <button id="icons-random-button" class="action-button random">Random</button>
+                        <button id="icons-save-button" class="action-button save">Save Prompt</button>
+                        <button id="icons-copy-button" class="action-button copy">Copy to Clipboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dynamically added media content sections will be appended here -->
+    </div>
+	<script src="app/script.js"></script>
+</body>
+</html>
